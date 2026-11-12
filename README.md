@@ -1,50 +1,84 @@
-# Teeth Disease Classification using CNN and EfficientNetB0
+<div align="center">
 
-## Project Overview
-This project focuses on classifying dental images into seven different categories using deep learning techniques.
+# 🦷 Teeth Disease Classification — EfficientNetB0
 
-The project includes:
-- Data preprocessing and augmentation
-- Custom CNN model development
-- Transfer learning using EfficientNetB0
-- Model evaluation
-- Streamlit deployment
+**Transfer learning with EfficientNetB0 to classify dental images into 7 conditions, deployed as an interactive Streamlit app.**
 
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?logo=tensorflow&logoColor=white)
+![EfficientNet](https://img.shields.io/badge/Model-EfficientNetB0-4285F4)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+![Accuracy](https://img.shields.io/badge/Test%20Accuracy-97%25-success)
 
-## Dataset Classes
+</div>
 
-The model classifies images into:
+---
 
-- CaS
-- CoS
-- Gum
-- MC
-- OC
-- OLP
-- OT
+## 📌 Overview
 
+This project compares two approaches to dental image classification:
 
-## Models
+1. **Custom CNN** trained from scratch — see [Teeth-Classification-CNN](https://github.com/Ammarjm/Teeth-Classification-CNN)
+2. **EfficientNetB0** pre-trained on ImageNet, adapted with **transfer learning and fine-tuning** (this repository)
 
-### Week 3
-Custom CNN model trained from scratch.
+The final model is served through a **Streamlit** web app: upload a dental image and get the predicted condition instantly.
 
-### Week 4
-EfficientNetB0 pretrained model using transfer learning and fine-tuning.
+## 🏷️ Classes
 
+`CaS` Caries · `CoS` Calculus · `Gum` Gum Disease · `MC` Mouth Cancer · `OC` Oral Cancer · `OLP` Oral Lichen Planus · `OT` Other
 
-## Performance
+**Dataset split:** 3,087 training · 1,028 validation · 1,028 test images
 
-EfficientNetB0 achieved:
+## ⚙️ Training Strategy
 
-- Test Accuracy: 97%
-- Precision: 0.97
-- Recall: 0.97
-- F1-score: 0.97
+```mermaid
+flowchart LR
+    A[Dental Images] --> B[Preprocess & Augment]
+    B --> C[EfficientNetB0 · frozen]
+    C --> D[Train custom head]
+    D --> E[Unfreeze & fine-tune]
+    E --> F[Evaluate on test set]
+    F --> G[Streamlit App]
+```
 
+- **Stage 1 — Feature extraction:** frozen EfficientNetB0 backbone with a new classification head (≈ 330 K trainable parameters)
+- **Stage 2 — Fine-tuning:** backbone unfrozen and trained with a low learning rate
+- **Balanced class weights** to handle uneven class sizes
+- **Callbacks:** early stopping · learning-rate reduction · best-model checkpointing
 
-## Deployment
+## 📊 Results (Test Set)
 
-The final model was deployed using Streamlit.
+| Metric | Score |
+|---|---|
+| Accuracy | **97 %** |
+| Precision | 0.97 |
+| Recall | 0.97 |
+| F1-Score | **0.97** |
 
-Run:
+## 🧰 Tech Stack
+
+Python · TensorFlow / Keras · EfficientNetB0 · NumPy · Pandas · OpenCV · Scikit-learn · Matplotlib · Seaborn · Streamlit
+
+## 📂 Project Structure
+
+```text
+├── Transfer_Learning.ipynb   # Training, fine-tuning & evaluation
+├── app.py                    # Streamlit app
+├── models/                   # Saved models (head weights & fine-tuned model)
+├── Teeth_Dataset/            # Training / Validation / Testing images
+└── requirements.txt
+```
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/Ammarjm/Teeth-Disease-Classification-EfficientNet.git
+cd Teeth-Disease-Classification-EfficientNet
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## 👤 Author
+
+**Ammar Alsabateen** — AI & Machine Learning Engineer
+[GitHub](https://github.com/Ammarjm) · [Email](mailto:alsabateenammar@gmail.com)
