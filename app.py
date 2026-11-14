@@ -89,3 +89,5 @@ if uploaded_file:
         st.write(
             f"{class_name}: {probabilities[i]:.2%}"
         )
+
+# streamlit run app.py
